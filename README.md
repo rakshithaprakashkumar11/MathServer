@@ -30,12 +30,116 @@ Create a HTML file to implement form based input and output.
 Publish the website in the given URL.
 
 ## PROGRAM :
+## Math.html
+''' 
+<html>
+
+      <head>
+        
+        <style>
+            h1{
+                color: red;
+                font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+                text-align: center;
+            
+            }
+            .edge {
+                 width: 1080px;       
+                margin-left: auto;
+                margin-right: auto;
+                padding-top: 200px;
+                padding-left: 300px;}
+            .box {
+                display:block;
+                border: Thick dashed lime;
+                width: 500px;
+                min-height: 300px;
+                font-size: 20px;
+                background-color: pink;}
+            .formelt{
+                color: Red;
+                text-align: center;
+                margin-top: 5px;
+                margin-bottom: 5px;
+            }
+        </style>
+
+    </head>
+    <body bgcolor="blue">
+        <div class="edge">
+        <div class="box">
+        <h1>Area of Cylinder</h1>
+        <form method="POST">
+        {% csrf_token %}
+        <div class="formelt">
+        length : <input type="text" name="length" value="{{l}}"></input>(in m)<br/>
+        </div>
+        <div class="formelt">
+        radius : <input type="text" name="radius" value="{{r}}"></input>(in m)<br/>
+        </div>
+        <div class="formelt">
+            <input type="submit" value="Calculate"></input><br/>
+        </div>
+        <div class="formelt">
+            
+            Area: <input type="text" name="radius" value="{{area}}"></input>m<sup>2</sup><br/>
+        </div>
+
+        </form>
+
+        </div>
+        </div>
+    </body>
+    </html>
+'''
+## views.py
+'''
+
+     from django.shortcuts import render
+     def cyndarea(request):
+    context={}
+    context['area']="0"
+    context['l']="0"
+    context['r']="0"
+    if request.method == 'POST':
+        print("POST method is used")
+        l = request.POST.get('length','0')
+        r = request.POST.get('radius','0')
+        print('request=',request)
+        print('Length=',l)
+        print('Radius=',r)
+        area = 2*3.14*float(r)*float(l) + 2*3.14*float(r)*float(r)
+        context['area'] = area
+        context['l'] = l
+        context['r'] = r
+        print('Area=',int(area))
+    return render(request,'app5/math.html',context)
+'''
+##urls.py
+'''
 
 
-## SERVER SIDE PROCESSING:
+    from django.contrib import admin
+    from django.urls import path
+     from app5 import views
+    urlpatterns=[
+    path('admin/',admin.site.urls),
+    path('areaofcylinder/',views.cyndarea,name="AreaofCylinder"),
+    path('',views.cyndarea,name="AreaofCylinderroot")]
+'''
+
+
+
 
 
 ## HOMEPAGE:
+![Screenshot 2024-04-17 171919](https://github.com/kaviya546/MathServer/assets/150368823/d85eff85-d23b-4491-bfaf-8a61caee1bfc)
+
+
+
+
+
+
 
 
 ## RESULT:
